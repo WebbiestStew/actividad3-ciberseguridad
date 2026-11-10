@@ -68,7 +68,7 @@ La API valida firma HS256, emisor, audiencia, expiración y sujeto. Solo el rol 
 
 ## Resultados verificados
 
-- **Fase 1.** [Validación de Terraform](evidence/terraform-validacion.txt) y [plan](evidence/terraform-plan.txt) correctos, con tres recursos por crear. Pendientes la aplicación en LocalStack, la comprobación de S3 y las capturas del plan Hobby y del Resource Browser.
+- **Fase 1.** El [plan](evidence/terraform-plan.txt) se [aplicó](evidence/terraform-aplicacion.txt) a un [contenedor saludable](evidence/localstack-servicio.txt). Terraform confirmó [cero cambios pendientes](evidence/terraform-verificacion.txt). El [dashboard](evidence/localstack-dashboard.jpg) muestra el bucket y `prueba.txt`. Las [consultas S3](evidence/s3-verificacion.txt) confirmaron AES256 y los cuatro bloqueos. El simulador permitió la descarga sin firma y devolvió exactamente los bytes subidos. El [plan Hobby](evidence/localstack-hobby.jpg) restringió `GetBucketPolicyStatus`. La consulta `GetBucketPolicy` devolvió `NoSuchBucketPolicy`, lo que confirma la ausencia de una política adjunta. El resultado anónimo muestra cómo respondió el emulador local a esta prueba.
 - **Fase 2.** [Trivy 0.76.2](evidence/trivy-resumen.txt) registró 1,456 hallazgos en `node:14` y 12,309 en `node:18`. Los hallazgos del componente Node.js bajaron de 45 a 39, pero el total de la imagen subió, principalmente por los resultados de Debian. Trivy advirtió que Debian 10.13 está fuera de soporte y que su cobertura puede ser insuficiente. Los totales cuentan hallazgos por paquete y severidad.
 
   | Imagen | Crítica | Alta | Media | Baja | Desconocida |

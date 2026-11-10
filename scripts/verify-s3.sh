@@ -31,9 +31,18 @@ else
 fi
 if result=$(local_aws s3api get-bucket-policy-status --bucket "$bucket" 2>&1); then
   printf '%s\n' "$result"
-elif [[ "$result" == *NoSuchBucketPolicy* ]]; then
-  printf 'NoSuchBucketPolicy indica que el bucket no tiene una política adjunta.\n'
 else
-  printf '%s\n' "$result" >&2
-  exit 1
+  if [[ "$result" == *InternalFailure* && "$result" == *"not included within your LocalStack license"* ]]; then
+    printf 'GetBucketPolicyStatus no está disponible con esta licencia de LocalStack.\n%s\n' "$result"
+    if result=$(local_aws s3api get-bucket-policy --bucket "$bucket" 2>&1); then
+      printf '%s\n' "$result"
+      exit 0
+    fi
+  fi
+  if [[ "$result" == *NoSuchBucketPolicy* ]]; then
+    printf '%s\nNoSuchBucketPolicy indica que el bucket no tiene una política adjunta.\n' "$result"
+  else
+    printf '%s\n' "$result" >&2
+    exit 1
+  fi
 fi

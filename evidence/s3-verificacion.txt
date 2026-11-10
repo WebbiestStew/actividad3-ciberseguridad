@@ -1,0 +1,78 @@
+{
+    "Buckets": [
+        {
+            "Name": "actividad3-seguro-local",
+            "CreationDate": "2026-11-10T23:38:38+00:00",
+            "BucketRegion": "us-east-1",
+            "BucketArn": "arn:aws:s3:::actividad3-seguro-local"
+        }
+    ],
+    "Owner": {
+        "ID": "75aa57f09aa0c8caeab4f8c24e99d10f8e7faeebf76c078efc7c6caea54ba06a"
+    },
+    "Prefix": null
+}
+{
+    "ServerSideEncryptionConfiguration": {
+        "Rules": [
+            {
+                "ApplyServerSideEncryptionByDefault": {
+                    "SSEAlgorithm": "AES256"
+                },
+                "BucketKeyEnabled": false
+            }
+        ]
+    }
+}
+{
+    "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": true,
+        "IgnorePublicAcls": true,
+        "BlockPublicPolicy": true,
+        "RestrictPublicBuckets": true
+    }
+}
+{
+    "ETag": "\"4544b85ac9589dca20d85fe3d72164f7\"",
+    "ChecksumCRC64NVME": "nPx7qyV8jd8=",
+    "ChecksumType": "FULL_OBJECT",
+    "ServerSideEncryption": "AES256"
+}
+{
+    "Contents": [
+        {
+            "Key": "prueba.txt",
+            "LastModified": "2026-11-10T23:44:57+00:00",
+            "ETag": "\"4544b85ac9589dca20d85fe3d72164f7\"",
+            "ChecksumAlgorithm": [
+                "CRC64NVME"
+            ],
+            "ChecksumType": "FULL_OBJECT",
+            "Size": 39,
+            "StorageClass": "STANDARD"
+        }
+    ],
+    "RequestCharged": null,
+    "Prefix": "prueba.txt"
+}
+Acceso anónimo permitido por el simulador.
+{
+    "AcceptRanges": "bytes",
+    "LastModified": "2026-11-10T23:44:57+00:00",
+    "ContentLength": 39,
+    "ETag": "\"4544b85ac9589dca20d85fe3d72164f7\"",
+    "ChecksumCRC64NVME": "nPx7qyV8jd8=",
+    "ChecksumType": "FULL_OBJECT",
+    "ContentType": "binary/octet-stream",
+    "ServerSideEncryption": "AES256",
+    "Metadata": {}
+}
+GetBucketPolicyStatus no está disponible con esta licencia de LocalStack.
+
+aws: [ERROR]: An error occurred (InternalFailure) when calling the GetBucketPolicyStatus operation: Sorry, the s3 service is not included within your LocalStack license, but is available in an upgraded license. Please refer to https://docs.localstack.cloud/references/coverage for more details.
+
+aws: [ERROR]: An error occurred (NoSuchBucketPolicy) when calling the GetBucketPolicy operation: The bucket policy does not exist
+
+Additional error details:
+BucketName: actividad3-seguro-local
+NoSuchBucketPolicy indica que el bucket no tiene una política adjunta.
