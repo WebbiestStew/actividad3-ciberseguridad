@@ -37,7 +37,7 @@ En macOS instala [Docker Desktop](https://docs.docker.com/desktop/setup/install/
    ```
 
 5. Ejecuta `bash scripts/verify-s3.sh` y guarda la salida. El script consulta el cifrado y los cuatro controles, carga `prueba.txt`, lista objetos, intenta descargar sin firma y consulta el estado de la política.
-6. En el [Resource Browser de LocalStack](https://docs.localstack.cloud/aws/connecting/localstack-console/resource-browser/), desde el mismo Mac, selecciona el endpoint `http://localhost:4566`, abre S3 y captura el bucket `actividad3-seguro-local` con el objeto de prueba.
+6. En el [Resource Browser de LocalStack](https://docs.localstack.cloud/aws/connecting/console/resource-browser/), desde el mismo Mac, selecciona el endpoint `http://localhost:4566`, abre S3 y captura el bucket `actividad3-seguro-local` con el objeto de prueba.
 
 Terraform declara la configuración deseada. Las consultas de AWS CLI comprueban lo que el simulador devuelve. La descarga sin firma mide el comportamiento observado, que depende de la cobertura de autorización de LocalStack. `NoSuchBucketPolicy` indica que el bucket carece de una política adjunta. La exposición se evalúa con los controles aplicados y el resultado de la prueba anónima.
 
@@ -65,3 +65,15 @@ ZAP_SH=/ruta/a/zap.sh bash scripts/scan-api.sh
 El script inicia la API y el proxy de ZAP en loopback. Envía cuatro solicitudes a través de ZAP y comprueba los códigos `401`, `401`, `403` y `200` para token ausente, inválido, rol de usuario y rol de administrador, respectivamente. Ejecuta el escaneo activo de `/health` y `/api/admin` y guarda el resumen y el informe HTML en `evidence/`. Los tokens de prueba caducan en cinco minutos.
 
 La API valida firma HS256, emisor, audiencia, expiración y sujeto. Solo el rol `admin` puede acceder a `/api/admin`. El generador de tokens se ejecuta por terminal y requiere el secreto del laboratorio. Para explorar la API manualmente, exporta `JWT_SECRET="$(openssl rand -hex 32)"`, inicia `npm --prefix api start` y consulta `http://127.0.0.1:3000/openapi.json`.
+
+## Resultados verificados
+
+- **Fase 1.** [Validación de Terraform](evidence/terraform-validacion.txt) y [plan](evidence/terraform-plan.txt) correctos, con tres recursos por crear. Pendientes la aplicación en LocalStack, la comprobación de S3 y las capturas del plan Hobby y del Resource Browser.
+- **Fase 2.** [Trivy 0.76.2](evidence/trivy-resumen.txt) registró 1,456 hallazgos en `node:14` y 12,309 en `node:18`. Los hallazgos del componente Node.js bajaron de 45 a 39, pero el total de la imagen subió, principalmente por los resultados de Debian. Trivy advirtió que Debian 10.13 está fuera de soporte y que su cobertura puede ser insuficiente. Los totales cuentan hallazgos por paquete y severidad.
+
+  | Imagen | Crítica | Alta | Media | Baja | Desconocida |
+  | --- | ---: | ---: | ---: | ---: | ---: |
+  | `node:14` | 23 | 572 | 735 | 122 | 4 |
+  | `node:18` | 228 | 2,441 | 6,814 | 2,720 | 106 |
+
+- **Fase 3.** Pasaron las [nueve pruebas HTTP](evidence/jwt-pruebas.txt). El [primer escaneo](evidence/zap-antes.txt) reportó dos instancias de severidad baja por la ausencia del encabezado `X-Content-Type-Options`. Después de añadir `nosniff`, el [segundo escaneo](evidence/zap-ejecucion.txt) completó ambas rutas con cero alertas. Las solicitudes por el proxy conservaron los resultados esperados de autenticación y permisos.

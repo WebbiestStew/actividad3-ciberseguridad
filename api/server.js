@@ -11,6 +11,10 @@ function createApp(secret) {
 
   const app = express();
   app.disable('x-powered-by');
+  app.use((_req, res, next) => {
+    res.set('X-Content-Type-Options', 'nosniff');
+    next();
+  });
 
   app.get('/health', (_req, res) => res.json({ status: 'ok' }));
   app.get('/openapi.json', (_req, res) => res.json(require('./openapi.json')));

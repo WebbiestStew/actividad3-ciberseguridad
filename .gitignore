@@ -11,3 +11,6 @@ node_modules/
 .DS_Store
 evidence/zap*.html
 evidence/zap*.json
+
+evidence/trivy-node*.json
+evidence/trivy-ejecucion.txt

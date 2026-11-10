@@ -1,0 +1,9 @@
+{"status":"ok"}
+{"version":"2.17.0"}
+Sin token: 401 (esperado 401)
+JWT inválido: 401 (esperado 401)
+JWT de usuario: 403 (esperado 403)
+JWT de administrador: 200 (esperado 200)
+Escaneo activo /health: 100%
+Escaneo activo /api/admin: 100%
+{"alertsSummary":{"High":0,"Low":0,"Medium":0,"Informational":0}}

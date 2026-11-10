@@ -35,6 +35,7 @@ test('Control de acceso HTTP de /api/admin', async (t) => {
       const headers = credential ? { Authorization: `Bearer ${credential}` } : {};
       const response = await fetch(url, { headers });
       assert.equal(response.status, status);
+      assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
       const body = await response.json();
       assert.equal(Object.hasOwn(body, 'message'), status === 200);
     });
