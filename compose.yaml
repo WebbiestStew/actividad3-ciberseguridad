@@ -1,0 +1,13 @@
+services:
+  localstack:
+    image: localstack/localstack:2026.03.0
+    ports:
+      - "127.0.0.1:4566:4566"
+    environment:
+      SERVICES: s3
+      LOCALSTACK_AUTH_TOKEN: ${LOCALSTACK_AUTH_TOKEN:?Configura el token privado en .env}
+    healthcheck:
+      test: ["CMD-SHELL", "awslocal s3api list-buckets >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 24

@@ -1,0 +1,13 @@
+{
+  "name": "actividad3-api-jwt",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "jsonwebtoken": "9.0.3"
+  }
+}

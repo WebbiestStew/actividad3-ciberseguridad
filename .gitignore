@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+*.tfstate*
+*.tfplan
+.terraform/
+*.tfvars
+node_modules/
+*.pem
+*.key
+.DS_Store
+evidence/zap*.html
+evidence/zap*.json

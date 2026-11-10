@@ -1,0 +1,23 @@
+
+> actividad3-api-jwt@1.0.0 test
+> node --test
+
+▶ Control de acceso HTTP de /api/admin
+  ✔ sin token (23.756125ms)
+  ✔ token mal formado (4.519333ms)
+  ✔ firma incorrecta (4.233666ms)
+  ✔ token vencido (1.825792ms)
+  ✔ sin expiración (1.627041ms)
+  ✔ algoritmo distinto (1.330417ms)
+  ✔ audiencia incorrecta (1.372333ms)
+  ✔ usuario válido sin permisos (1.661292ms)
+  ✔ administrador válido (3.452084ms)
+✔ Control de acceso HTTP de /api/admin (52.934167ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 189.33275
